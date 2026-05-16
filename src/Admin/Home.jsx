@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-import homeImg from "../assets/home.png";
+import homeImg from "../assets/Home.png";
 import { Box, Typography, Button, GlobalStyles } from "@mui/material";
 
 export default function HeroSection() {
