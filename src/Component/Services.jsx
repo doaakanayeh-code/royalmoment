@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination } from 'swiper/modules';
+import { useNavigate } from 'react-router-dom'; 
 
 import 'swiper/css';
 import 'swiper/css/navigation';
@@ -24,16 +25,22 @@ const crafts = [
 ];
 
 const VenueSlider = () => {
+  const navigate = useNavigate(); 
+
   const venues = [
     { id: 1, name: 'صالة لازورد', location: 'دمشق - المزة', capacity: '500 شخص', img: 'https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=500' },
     { id: 2, name: 'صالة البهية', location: 'دمشق - طريق المطار', capacity: '700 شخص', img: 'https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=500' },
     { id: 3, name: 'صالة الجلاء', location: 'دمشق - أوتوستراد المزة', capacity: '400 شخص', img: 'https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=500' },
-    { id: 4, name: 'صالة مون هاوس', location: 'ريف دمشق', capacity: '600 شخص', img: 'https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=500' },
+    { id: 4, name: 'صالة مون هاوس', location: '  دمشق-شارع برنية ', capacity: '600 شخص', img: 'https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=500' },
   ];
 
+  const handleExploreClick = (venue) => {
+    navigate('/ServicesDetails', { state: { venue } });
+  };
+
   return (
-    <div style={{ backgroundColor: '#DCC8BB', padding: '40px 20px', borderRadius: '40px', width: '100%' }}>
-      <h2 style={{ color: '#d4af37', textAlign: 'center', marginBottom: '60px', fontSize: '1.8rem', fontWeight: 'bold', fontFamily: 'serif' }}>الصالات المتاحة</h2>
+    <div style={{ backgroundColor: '#DCC8BB', padding: '40px 20px', borderRadius: '40px', width: '100%', boxSizing: 'border-box' }}>
+      <h2 style={{ color: '#ffffff', textAlign: 'center', marginBottom: '60px', fontSize: '1.8rem', fontWeight: 'bold', fontFamily: 'serif' }}>الصالات المتاحة</h2>
       <Swiper
         modules={[Navigation, Pagination]}
         spaceBetween={30}
@@ -54,10 +61,15 @@ const VenueSlider = () => {
                 </div>
               </div>
               <div style={{ textAlign: 'center' }}>
-                <h3 style={{ color: '#DCC8BB', fontSize: '1.2rem', fontWeight: 'bold', marginBottom: '5px' }}>{venue.name}</h3>
+                <h3 style={{ color: '#ffffff', fontSize: '1.2rem', fontWeight: 'bold', marginBottom: '5px' }}>{venue.name}</h3>
                 <p style={{ color: '#5d4037', fontSize: '0.85rem', margin: '2px' }}>📍 {venue.location}</p>
                 <p style={{ color: '#5d4037', fontSize: '0.85rem', marginBottom: '15px' }}>👥 السعة: {venue.capacity}</p>
-                <button style={{ backgroundColor: 'transparent', border: '2px solid #d18c96', color: '#d18c96', padding: '8px 20px', borderRadius: '30px', cursor: 'pointer', fontWeight: 'bold' }}>استكشف الصالة</button>
+                <button 
+                  onClick={() => handleExploreClick(venue)} 
+                  style={{ backgroundColor: '#ffffff', border: '2px solid #ffffff', color: '#8d6e63', padding: '8px 20px', borderRadius: '30px', cursor: 'pointer', fontWeight: 'bold', boxShadow: '0 4px 6px rgba(0,0,0,0.05)' }}
+                >
+                  استكشف الصالة
+                </button>
               </div>
             </div>
           </SwiperSlide>
@@ -77,11 +89,10 @@ const Services = () => {
     setTimeout(() => {
       setIsLoading(false);
       setShowSlider(true);
-    }, 1000);
-  };
+    })}
 
   return (
-    <div style={{ backgroundColor: '#f4e9e2', minHeight: '100vh', padding: '60px 20px', fontFamily: 'serif', position: 'relative' }}>
+    <div style={{ backgroundColor: '#f4e9e2', minHeight: '100vh', padding: '60px 20px', fontFamily: 'serif', position: 'relative', boxSizing: 'border-box' }}>
       
       {isLoading && (
         <div className="modal-overlay">
@@ -139,7 +150,7 @@ const Services = () => {
         .royal-card:hover { transform: translateY(-10px); background-color: #d7ccc8 !important; }
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7); display: flex; align-items: center; justify-content: center; z-index: 9999; }
         .modal-content { background: #DCC8BB; padding: 30px; border-radius: 40px; width: 90%; max-width: 1100px; position: relative; animation: slideIn 0.3s ease-out; }
-        .close-btn { position: absolute; top: 15px; right: 20px; background: #DCC8BB; border: none; width: 35px; height: 35px; border-radius: 50%; color: white; cursor: pointer; }
+        .close-btn { position: absolute; top: 15px; right: 20px; background: #DCC8BB; border: none; width: 35px; height: 35px; border-radius: 50%; color: white; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: bold; }
         @keyframes slideIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
       `}</style>
     </div>

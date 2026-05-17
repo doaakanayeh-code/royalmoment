@@ -14,12 +14,14 @@ import Users from "./Admin/Users";
 import Dashboard from "./Admin/Dashboard";
 import DashboardLayout from "./Admin/DashboardLayout";
 import Providers from "./Admin/Providers";
+import 'react-toastify/dist/ReactToastify.css';
 // import Financial_Follow from "./Admin/Financial_Follow";
 // import Reports from "./Admin/Reports";
 // import Booking from "./Admin/Booking";
 // import Comments from "./Admin/Comments";
 import Home from "./Admin/Home";
 import LoginPage from "./Admin/Login";
+import ServicesDetails from "./Component/ServicesDetails";
 
 // Auth Components
 import Login from "./Auth/Login";
@@ -86,6 +88,8 @@ export default function App() {
           <Route path="/onboarding" element={<Onboarding />} />
           <Route path="/services" element={<Services />} />
           <Route path="/google-callback" element={<GoogleCallback />} />
+          <Route path="/ServicesDetails" element={<ServicesDetails />} />
+
 
         </Route>
 
