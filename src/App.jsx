@@ -10,6 +10,7 @@ import HeroSection from "./Component/HeroSection";
 import Onboarding from "./Onboarding";
 import MainComponent from "./Component/MainComponent";
 import Contactas from "./Component/Contactas";
+import AddServices from "./Component/AddServices";
 import Users from "./Admin/Users";
 import Dashboard from "./Admin/Dashboard";
 import DashboardLayout from "./Admin/DashboardLayout";
@@ -22,11 +23,12 @@ import 'react-toastify/dist/ReactToastify.css';
 import Home from "./Admin/Home";
 import LoginPage from "./Admin/Login";
 import ServicesDetails from "./Component/ServicesDetails";
-
+import ConfirmBooking from "./Component/ConfirmBooking";
+import FinancialContent from "./Admin/FinancialContent";
+import { Toaster } from "react-hot-toast";
 // Auth Components
 import Login from "./Auth/Login";
 import SignUp from "./Auth/SignUp";
-// import Logout from "./Auth/Logout";
 import Profile from "./Auth/Profile";
 import ForgotPassword from "./Component/ForgotPassword";
 import ResetPassword from "./Component/ResetPassword";
@@ -65,8 +67,10 @@ export default function App() {
   );
 
   return (
+    
     <ThemeProvider theme={theme}>
       <CssBaseline />
+       <Toaster position="top-right" />
       <Routes>
         <Route path="/" element={<HomePage mode={mode} setMode={setMode} />}>
           <Route
@@ -89,6 +93,11 @@ export default function App() {
           <Route path="/services" element={<Services />} />
           <Route path="/google-callback" element={<GoogleCallback />} />
           <Route path="/ServicesDetails" element={<ServicesDetails />} />
+          <Route path="/ConfirmBooking" element={<ConfirmBooking />} />
+                    <Route path="/AddServices" element={<AddServices />} />
+
+
+
 
 
         </Route>
@@ -99,9 +108,10 @@ export default function App() {
           <Route path="Home" element={<Home />} />
           <Route path="users" element={<Users />} />
           <Route path="provider" element={<Providers />} />
-          {/* <Route path="logout" element={<Logout />} />
+          <Route path="financial_content" element={<FinancialContent />} />
 
-          <Route path="financial_Follow" element={<Financial_Follow />} />
+
+          {/*<Route path="financial_Follow" element={<Financial_Follow />} />
           <Route path="comments" element={<Comments />} />
           <Route path="reports" element={<Reports />} />
           <Route path="booking" element={<Booking />} /> */}

@@ -9,6 +9,7 @@ import {
   Badge,
   Typography,
   Avatar,
+  Button, // استيراد الـ Button من أجل زر مزود الخدمة
 } from "@mui/material";
 
 import MenuIcon from "@mui/icons-material/Menu";
@@ -19,7 +20,7 @@ import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import { Link, useLocation } from "react-router-dom";
 import { MenuContext } from "../Context/MenuContext";
 import { useContext } from "react";
-  import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -27,12 +28,12 @@ import {
   faSun,
   faCalendarCheck,
   faCrown,
-  faGlobe, // استيراد أيقونة العالم هنا
+  faGlobe,
+  faPlus, // استيراد أيقونة الزائد إذا حركتي تضيفيها للزر
 } from "@fortawesome/free-solid-svg-icons";
 
 import "flag-icons/css/flag-icons.min.css";
 
-// ... (Search Styles تبقى كما هي)
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
   borderRadius: "12px",
@@ -65,8 +66,6 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 export default function PrimarySearchAppBar({ mode, setMode, isDashboard = false }) {
   const menu = useContext(MenuContext);
   const location = useLocation();
-
-  // أضفنا t هنا لترجمة النصوص
   const { t, i18n } = useTranslation();
 
   const toggleLanguage = () => {
@@ -77,7 +76,6 @@ export default function PrimarySearchAppBar({ mode, setMode, isDashboard = false
     document.body.style.fontFamily = newLang === 'ar' ? "'Cairo', sans-serif" : "'serif'";
   };
 
-  // الروابط الآن ديناميكية وتتغير مع اللغة
   const navLinks = [
     { name: t('navbar.home'), path: "/" },
     { name: t('navbar.services'), path: "/services" },
@@ -90,6 +88,7 @@ export default function PrimarySearchAppBar({ mode, setMode, isDashboard = false
       <AppBar position="fixed" sx={{ backgroundColor: "background.paper", color: "text.primary", boxShadow: "none", borderBottom: "1px solid rgba(0,0,0,0.08)", zIndex: 1400 }}>
         <Toolbar sx={{ minHeight: "85px !important", px: 4, display: "flex", justifyContent: "space-between" }}>
           
+          {/* القسم الأيسر: اللوغو والاسم */}
           <Box sx={{ display: "flex", alignItems: "center", gap: 1, minWidth: "220px" }}>
             {isDashboard && (
               <IconButton edge="start" color="inherit" onClick={() => menu.setIsOpen((prev) => !prev)}>
@@ -109,6 +108,7 @@ export default function PrimarySearchAppBar({ mode, setMode, isDashboard = false
             )}
           </Box>
 
+          {/* القسم الأوسط: روابط التنقل */}
           {!isDashboard && (
             <Box sx={{ flexGrow: 1, display: "flex", justifyContent: "center", gap: 5, "& a": { textDecoration: "none", color: "inherit", fontWeight: "600", fontSize: "1.05rem", position: "relative", pb: "8px", transition: "0.3s", opacity: 0.8, "&.active": { opacity: 1, "&::after": { content: '""', position: "absolute", bottom: 0, left: "10%", width: "80%", height: "3px", backgroundColor: "#d18c96", borderRadius: "10px" } } } }}>
               {navLinks.map((link) => (
@@ -119,14 +119,45 @@ export default function PrimarySearchAppBar({ mode, setMode, isDashboard = false
             </Box>
           )}
 
+          {/* القسم الأيمن: الأزرار والتحكم */}
           <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+            
+            {/* زر إضافة خدمة / مزود الخدمة - يظهر فقط في الصفحة العادية */}
+            {!isDashboard && (
+              <Button
+                component={Link}
+                to="/AddServices" 
+                variant="outlined"
+                startIcon={<FontAwesomeIcon icon={faPlus} style={{ fontSize: "0.85rem" }} />}
+                sx={{
+                  borderColor: "#d18c96",
+                  color: "#d18c96",
+                  fontWeight: "600",
+                  textTransform: "none",
+                  borderRadius: "10px",
+                  px: 2,
+                  py: 0.8,
+                  fontSize: "0.9rem",
+                  whiteSpace: "nowrap",
+                  transition: "0.3s",
+                  "&:hover": {
+                    borderColor: "#b5737d",
+                    backgroundColor: alpha("#d18c96", 0.08),
+                  },
+                }}
+              >
+                {i18n.language === 'ar' ? 'انضم كمزود خدمة' : 'Become a Provider'}
+              </Button>
+            )}
+
             {!isDashboard && (
               <Search>
                 <SearchIconWrapper><SearchIcon fontSize="small" /></SearchIconWrapper>
                 <StyledInputBase placeholder={t('navbar.search')} />
               </Search>
             )}
-             <IconButton onClick={() => setMode(mode === "light" ? "dark" : "light")} color="inherit">
+
+            <IconButton onClick={() => setMode(mode === "light" ? "dark" : "light")} color="inherit">
               <FontAwesomeIcon icon={mode === "dark" ? faSun : faMoon} size="sm" />
             </IconButton>
 
@@ -144,10 +175,31 @@ export default function PrimarySearchAppBar({ mode, setMode, isDashboard = false
               </IconButton>
             )}
             
-
-            <Box onClick={toggleLanguage} sx={{ display: "flex", alignItems: "center", gap: 0.8, cursor: "pointer", ml: 1, px: 1.5, py: 0.5, borderRadius: "8px", transition: "0.3s", "&:hover": { backgroundColor: alpha(mode === "dark" ? "#fff" : "#000", 0.05) } }}>
-              <FontAwesomeIcon icon={faGlobe} style={{ fontSize: "1.1rem", color: "#d18c96" }} />
-              <Typography sx={{ fontSize: "0.9rem", fontWeight: "700", textTransform: "uppercase", userSelect: "none" }}>
+            <Box 
+              onClick={toggleLanguage} 
+              sx={{ 
+                display: "flex", 
+                alignItems: "center", 
+                gap: 1, 
+                cursor: "pointer", 
+                ml: 1, 
+                px: 1.8, 
+                py: 0.8, 
+                borderRadius: "10px", 
+                border: "1px solid rgba(0,0,0,0.1)", // الـ Border الصغير
+                borderColor: mode === "dark" ? "rgba(255,255,255,0.2)" : "rgba(0,0,0,0.1)",
+                transition: "0.3s", 
+                "&:hover": { 
+                  backgroundColor: alpha(mode === "dark" ? "#fff" : "#000", 0.05),
+                  borderColor: "#d18c96" // بيتغير لونه عند الـ Hover ليتناسق مع الهوية
+                } 
+              }}
+            >
+              {/* تكبير حجم أيكونة العالم لـ 1.35rem */}
+              <FontAwesomeIcon icon={faGlobe} style={{ fontSize: "1.35rem", color: "#d18c96" }} />
+              {/* إظهار اسم اللغة الحالية وعمل ستايل مرتب إلها */}
+              <Typography sx={{ fontSize: "0.95rem", fontWeight: "700", textTransform: "uppercase", userSelect: "none" }}>
+               
               </Typography>
             </Box>
 
