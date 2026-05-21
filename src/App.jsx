@@ -10,7 +10,7 @@ import HeroSection from "./Component/HeroSection";
 import Onboarding from "./Onboarding";
 import MainComponent from "./Component/MainComponent";
 import Contactas from "./Component/Contactas";
-import AddServices from "./Component/AddServices";
+import AddServices from "./Allcomponent/AddServices";
 import Users from "./Admin/Users";
 import Dashboard from "./Admin/Dashboard";
 import DashboardLayout from "./Admin/DashboardLayout";
@@ -19,7 +19,7 @@ import 'react-toastify/dist/ReactToastify.css';
 // import Financial_Follow from "./Admin/Financial_Follow";
 // import Reports from "./Admin/Reports";
 // import Booking from "./Admin/Booking";
-// import Comments from "./Admin/Comments";
+ import Comment from "./Admin/Comment";
 import Home from "./Admin/Home";
 import LoginPage from "./Admin/Login";
 import ServicesDetails from "./Component/ServicesDetails";
@@ -27,6 +27,7 @@ import ConfirmBooking from "./Component/ConfirmBooking";
 import FinancialContent from "./Admin/FinancialContent";
 import { Toaster } from "react-hot-toast";
 // Auth Components
+import Logout from "./Admin/Logout";
 import Login from "./Auth/Login";
 import SignUp from "./Auth/SignUp";
 import Profile from "./Auth/Profile";
@@ -87,7 +88,7 @@ export default function App() {
           <Route path="register" element={<SignUp />} />
           <Route path="forgot-password" element={<ForgotPassword />} />
           <Route path="reset-password" element={<ResetPassword />} />
-          {/* <Route path="logout" element={<Logout />} /> */}
+           <Route path="logout" element={<Logout />} /> 
           <Route path="contact" element={<Contactas />} />
           <Route path="/onboarding" element={<Onboarding />} />
           <Route path="/services" element={<Services />} />
@@ -109,10 +110,10 @@ export default function App() {
           <Route path="users" element={<Users />} />
           <Route path="provider" element={<Providers />} />
           <Route path="financial_content" element={<FinancialContent />} />
-
+           <Route path="comment" element={<Comment/>} />  
 
           {/*<Route path="financial_Follow" element={<Financial_Follow />} />
-          <Route path="comments" element={<Comments />} />
+         
           <Route path="reports" element={<Reports />} />
           <Route path="booking" element={<Booking />} /> */}
           <Route path="login" element={<LoginPage />} />

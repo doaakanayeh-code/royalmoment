@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react"; 
+import React, { useContext } from "react"; 
 import { useTranslation } from "react-i18next";
 import { Link, useLocation } from "react-router-dom";
 import Box from "@mui/material/Box";
@@ -12,12 +12,11 @@ import {
   faChartLine,
   faMoneyBillTrendUp,
   faComments,
-  faRightFromBracket,
   faUserGear
 } from "@fortawesome/free-solid-svg-icons";
 
-// 1. استيراد المودال المنفصل (تأكدي من صحة المسار بالنسبة لمجلداتكِ)
-import Logout from "../Auth/Logout"; 
+// 1. استدعاء ملف الـ Logout المستقل من نفس المجلد
+import Logout from "./Logout"; 
 
 export default function SideBar() {
   const { t, i18n } = useTranslation();
@@ -26,17 +25,7 @@ export default function SideBar() {
   const location = useLocation();
   const isAr = i18n.language === 'ar';
 
-  // 2. حالة التحكم بفتح وإغلاق نافذة تسجيل الخروج
-  const [openLogoutModal, setOpenLogoutModal] = useState(false);
-
-  // 3. دالة تنفيذ الخروج الفعلي عند الضغط على "تأكيد"
-  const handleActualLogout = () => {
-    setOpenLogoutModal(false);
-    console.log("تم تسجيل الخروج بنجاح ومسح التوكن");
-    
-
-  };
-
+  // شلنا خيار اللوغ أوت من المصفوفة كرمال نطبعه لحاله تحت
   const links = [
     { title: t("sidebar.dashboard"), path: "/admin/dashboard", icon: faChartLine },
     { title: t("sidebar.users"), path: "/admin/users", icon: faUsers },
@@ -44,9 +33,8 @@ export default function SideBar() {
     { title: t("sidebar.bookings"), path: "/admin/booking", icon: faCalendarCheck },
     { title: t("sidebar.reports"), path: "/admin/reports", icon: faClipboardList },
     { title: t("sidebar.financial_follow"), path: "/admin/financial_Follow", icon: faMoneyBillTrendUp },
-    { title: t("sidebar.comments"), path: "/admin/comments", icon: faComments },
+    { title: t("sidebar.comments"), path: "/admin/comment", icon: faComments },
     { title: t("sidebar.home"), path: "/admin/Home", icon: faHouse },
-    { title: t("sidebar.logout"), path: "/admin/logout", icon: faRightFromBracket, isLogout: true },
   ];
 
   return (
@@ -79,7 +67,7 @@ export default function SideBar() {
           gap: 1.5, 
           alignItems: "flex-start", 
           mt: 2,
-          "& a": {
+          "& a, & .logout-sidebar-btn": { // أضفنا كلاس اللوغ أوت هون لتأخذ نفس الـ hover
             display: "flex",
             alignItems: "center",
             gap: "14px",
@@ -91,12 +79,12 @@ export default function SideBar() {
             width: "100%",
             borderRadius: "16px",
             padding: "12px 18px",
+            cursor: "pointer", 
             "&:hover": {
               backgroundColor: "#E6D8CF",
               transform: isAr ? "translateX(-6px)" : "translateX(6px)",
             },
             "&.active": { backgroundColor: "#DCC8BB" },
-            cursor: "pointer", 
           },
         }}
       >
@@ -105,27 +93,18 @@ export default function SideBar() {
         {links.map((link) => (
           <Link 
             key={link.path} 
-            to={link.isLogout ? "#" : link.path} 
+            to={link.path} 
             className={location.pathname === link.path ? "active" : ""}
-            onClick={(e) => {
-              if (link.isLogout) {
-                e.preventDefault(); // منع الانتقال لصفحة جديدة
-                setOpenLogoutModal(true); // فتح المودال مباشرة
-              }
-            }}
           >
             <FontAwesomeIcon icon={link.icon} style={{ width: '20px' }} />
             {link.title}
           </Link>
         ))}
-      </Box>
 
-      <Logout 
-        open={openLogoutModal} 
-        onClose={() => setOpenLogoutModal(false)} 
-        onConfirm={handleActualLogout} 
-        isAr={isAr}
-      />
+        {/* 2. استدعاء كومبوننت الـ Logout المستقل كـ عنصر أخير بالسايدبار */}
+        <Logout title={t("sidebar.logout")} isAr={isAr} />
+
+      </Box>
     </Box>
   );
 }

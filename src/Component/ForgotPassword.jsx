@@ -1,40 +1,27 @@
 import React, { useState } from "react";
-import { Box, Typography, TextField, Button } from "@mui/material";
+import { TextField, Button } from "@mui/material";
 import Forgotpasswordim from "../assets/Forgotpassword.png";
-// 1. استيراد الترجمة
 import { useTranslation } from "react-i18next";
+import AuthLayout from "../Allcomponent/AuthLayout"; // استيراد القالب المشترك
 
 export default function ForgotPassword({ switchToLogin, switchToReset }) {
   const [email, setEmail] = useState("");
-  // 2. تفعيل دالة الترجمة
   const { t } = useTranslation();
 
-  function handleSubmit(e) {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    // هون لاحقاً بتحطي API تبع الإرسال
     switchToReset();
-  }
+  };
 
   return (
-    <Box sx={{ textAlign: "center", width: "100%" }}>
-      {/* IMAGE */}
-      <img
-        src={Forgotpasswordim}
-        alt="Forgot"
-        style={{ width: 200, marginBottom: 20 }}
-      />
-
-      {/* TITLE */}
-      <Typography variant="h5" fontWeight="600" sx={{ mb: 1, color: "#222" }}>
-        {t('auth.forgot_password_title')}
-      </Typography>
-
-      {/* TEXT */}
-      <Typography variant="body2" sx={{ color: "#777", mb: 4, px: 2, lineHeight: 1.8 }}>
-        {t('auth.forgot_password_desc')}
-      </Typography>
-
-      {/* FORM */}
+    <AuthLayout
+      image={Forgotpasswordim}
+      title={t('auth.forgot_password_title')}
+      description={t('auth.forgot_password_desc')}
+      footerText={t('auth.remember_password_text')}
+      footerLinkText={t('auth.login_link')}
+      onFooterLinkClick={switchToLogin}
+    >
       <form onSubmit={handleSubmit}>
         <TextField
           fullWidth
@@ -53,7 +40,6 @@ export default function ForgotPassword({ switchToLogin, switchToReset }) {
           }}
         />
 
-        {/* BUTTON */}
         <Button
           type="submit"
           fullWidth
@@ -63,7 +49,6 @@ export default function ForgotPassword({ switchToLogin, switchToReset }) {
             backgroundColor: "#d1a3a4",
             color: "#fff",
             py: 1.5,
-            mb: 3,
             textTransform: "none",
             fontSize: "1rem",
             boxShadow: "none",
@@ -73,23 +58,6 @@ export default function ForgotPassword({ switchToLogin, switchToReset }) {
           {t('auth.confirm_btn')}
         </Button>
       </form>
-
-      {/* BACK TO LOGIN */}
-      <Typography variant="body2" sx={{ color: "#777" }}>
-        {t('auth.remember_password_text')}
-        <span
-          onClick={switchToLogin}
-          style={{
-            color: "#d1a3a4",
-            fontWeight: "600",
-            marginLeft: "6px",
-            marginRight: "6px",
-            cursor: "pointer",
-          }}
-        >
-          {t('auth.login_link')}
-        </span>
-      </Typography>
-    </Box>
+    </AuthLayout>
   );
 }
