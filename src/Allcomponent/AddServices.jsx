@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import CakeOptions from '../Component/CakeOptions'; 
-import PhotographyOptions from '../Component/PhotographyOptions'; 
-
+import CakeOptions from '../Component/ServicesDetails/CakeOptions';
+import PhotographyOptions from '../Component/ServicesDetails/PhotographyOptions';
 import MediaUploader from './MediaUploader'; 
 import PackageSystem from './PackageSystem';
 

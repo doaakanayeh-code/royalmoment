@@ -7,7 +7,7 @@ import IconButton from '@mui/material/IconButton';
 import { 
   Box, Typography, Container, Grid, Stack 
 } from '@mui/material';
-// 1. استيراد الترجمة
+
 import { useTranslation } from 'react-i18next';
 
 const Footer = () => {
@@ -37,7 +37,7 @@ const Footer = () => {
             <Typography sx={{ fontWeight: 'bold', mb: 2, color: 'text.primary' }}>
               {t('footer.quick_links')}
             </Typography>
-            {/* استخدام مفاتيح النافبار للروابط السريعة لتوحيد الترجمة */}
+     
             {[
               { key: 'home', label: t('navbar.home') },
               { key: 'services', label: t('navbar.services') },

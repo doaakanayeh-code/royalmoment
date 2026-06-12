@@ -1,6 +1,8 @@
 import MainComponent from "./MainComponent";
 import React from "react";
 import PrimarySearchAppBar from "./Tobbar";
+import AIAssistant from "./AIAssistant";
+import AIChatAssistant from "./AIChatAssistant";
 import { Outlet } from "react-router-dom";
 import Footer from "./Footer";
 import "../Css/bars.css";
@@ -23,6 +25,8 @@ export default function HomePage({ mode, setMode }) {
           </div>
         </div>
       </div>
+      <AIAssistant />
+      <AIChatAssistant />
     </div>
   );
 }

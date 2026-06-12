@@ -23,11 +23,11 @@ const HeroSection = () => {
         borderBottomLeftRadius: { xs: '60px', md: '200px' },
         borderBottomRightRadius: { xs: '60px', md: '200px' },
         py: { xs: 5, md: 10 },
-        // ضبط الاتجاه بشكل صريح للـ Box الأب
+       
         direction: isAr ? 'rtl' : 'ltr'
       }}
     >
-      {/* الخلفية المزخرفة */}
+    
       <Box 
         sx={{
           position: 'absolute',
@@ -50,16 +50,16 @@ const HeroSection = () => {
           container 
           spacing={2} 
           alignItems="center"
-          // استخدام wrap لضمان عدم النزول للأسفل إلا في الشاشات الصغيرة جداً
+       
           wrap="nowrap" 
           sx={{ 
             flexDirection: { xs: 'column', md: isAr ? 'row-reverse' : 'row' },
             width: '100%',
-            m: 0 // إزالة أي margin تلقائي قد يسبب إزاحة
+            m: 0 
           }}
         >
 
-          {/* 1. قسم النصوص (يأخذ 50% من العرض) */}
+
           <Grid item md={6} xs={12} sx={{ width: '100%', textAlign: isAr ? 'right' : 'left' }}>
             <Typography 
               variant="overline"
@@ -83,7 +83,7 @@ const HeroSection = () => {
                 color: 'text.primary',   
                 mt: 3,
                 mb: 2,
-                fontSize: { xs: '2.2rem', md: '3.5rem' }, // تصغير الخط قليلاً ليعطي مساحة للصورة
+                fontSize: { xs: '2.2rem', md: '3.5rem' }, 
                 lineHeight: 1.2
               }}
             >
@@ -119,7 +119,7 @@ const HeroSection = () => {
                 variant="contained"
                 onClick={() => setClick(true)}
                 sx={{
-                  bgcolor: '#d18c96', // لون مشروعك الزهري
+                  bgcolor: '#d18c96',
                   color: '#fff',
                   px: 4,
                   py: 1.2,
@@ -147,7 +147,6 @@ const HeroSection = () => {
             </Stack>
           </Grid>
 
-          {/* 2. قسم الصورة (يأخذ الـ 50% الباقية ويمنعها من النزول) */}
           <Grid item md={6} xs={12} sx={{ 
             display: 'flex', 
             justifyContent: 'center', 
@@ -160,9 +159,9 @@ const HeroSection = () => {
               alt="Illustration"
               sx={{
                 width: '100%',
-                maxWidth: { xs: '300px', md: '500px' }, // تحديد حجم أقصى للصورة
+                maxWidth: { xs: '300px', md: '500px' }, 
                 height: 'auto',
-                // إذا كانت الصورة "بنت" تنظر لجهة معينة، نقلبها في العربي
+               
                 transform: isAr ? 'scaleX(-1)' : 'none' 
               }}
             />

@@ -170,6 +170,11 @@ export default function LoginHeroSection() {
               >
                 Login
               </Button>
+              {accept && error && (
+  <p className="error" style={{ color: "red", marginTop: "10px", textAlign: "center" }}>
+    Wrong Email Or Password
+  </p>
+)}
             </Box>
           </Box>
         </Box>

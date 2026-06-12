@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Checkbox, Typography } from '@mui/material';
+import { Box, Checkbox, Typography, Button } from '@mui/material';
 
 // استيراد المكونات الجاهزة والمميزة تبعك
 import AuthLayout from '../Allcomponent/AuthLayout'; 
@@ -37,49 +37,6 @@ const ConfirmBooking = ({ isOpen, onClose, bookingDetails }) => {
   const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=Service:${encodeURIComponent(bookingDetails?.service || 'صالة البهية')}-Total:${bookingDetails?.total || '5000'}-User:${encodeURIComponent(bookingDetails?.clientName || 'John Doe')}&color=4A1525&bgcolor=FFF8F6`;
 
   const styles = {
-    overlay: {
-      position: 'fixed',
-      top: 0,
-      left: 0,
-      right: 0,
-      bottom: 0,
-      backgroundColor: 'rgba(0, 0, 0, 0.65)',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      zIndex: 1000,
-      backdropFilter: 'blur(6px)',
-    },
-    modalBox: {
-      backgroundColor: '#ffffff',
-      borderRadius: '35px',
-      boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
-      padding: '30px 24px 24px 24px',
-      width: '92%',
-      maxWidth: '460px',
-      position: 'relative',
-      boxSizing: 'border-box',
-      maxHeight: '90vh',
-      overflowY: 'auto'
-    },
-    closeButton: {
-      position: 'absolute',
-      top: '16px',
-      right: '20px',
-      background: '#E8D0CB',
-      border: 'none',
-      width: '32px',
-      height: '32px',
-      borderRadius: '50%',
-      fontSize: '14px',
-      color: '#4A1525',
-      cursor: 'pointer',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      fontWeight: 'bold',
-      zIndex: 10
-    },
     ticketSection: {
       border: '2px solid #E8D0CB',
       borderRadius: '24px',
@@ -135,29 +92,75 @@ const ConfirmBooking = ({ isOpen, onClose, bookingDetails }) => {
       outline: 'none',
       boxSizing: 'border-box',
       backgroundColor: '#FFF'
-    },
-    submitButton: {
-      width: '100%',
-      backgroundColor: '#4A1525',
-      color: '#ffffff',
-      fontWeight: 'bold',
-      padding: '14px',
-      border: 'none',
-      borderRadius: '25px',
-      fontSize: '16px',
-      cursor: 'pointer',
-      marginTop: '10px',
-      boxShadow: '0 6px 20px rgba(74, 21, 37, 0.25)',
-      transition: 'all 0.3s ease',
     }
   };
 
   return (
-    <div style={styles.overlay}>
-      <div style={styles.modalBox}>
+    /* 1. الحاوية الكبرى الشفافة المدعومة من نظام MUI لضمان التوسيط الشامل رغماً عن الهيدر */
+    <Box
+      sx={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        width: '100vw',
+        height: '100vh',
+        backgroundColor: 'rgba(0, 0, 0, 0.65)',
+        backdropFilter: 'blur(6px)',
+        display: 'flex',
+        alignItems: 'center',       // توسيط عمودي صارم
+        justifyContent: 'center',    // توسيط أفقي صارم
+        zIndex: 99999,              // يتفوق على أي Navbar أو عنصر برأس الصفحة
+      }}
+    >
+      {/* 2. جسم المودال الأبيض الذي يحتوي كرت التذكرة والـ AuthLayout */}
+      <Box
+        sx={{
+          backgroundColor: '#ffffff',
+          borderRadius: '35px',
+          boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
+          padding: '30px 24px 24px 24px',
+          width: '92%',
+          maxWidth: '460px',
+          position: 'relative',
+          boxSizing: 'border-box',
+          maxHeight: '85vh',        // حماية الأبعاد عمودياً
+          overflowY: 'auto',        // تفعيل التمرير الداخلي
+
+          /* ✨ إخفاء شريط السكرول تماماً مع بقاء التمرير شغالاً ✨ */
+          msOverflowStyle: 'none',  // لمتصفحات IE و Edge القديمة
+          scrollbarWidth: 'none',   // لمتصفح Firefox
+          '&::-webkit-scrollbar': {
+            display: 'none',        // لمتصفحات Chrome و Safari و Edge الحديثة
+          },
+        }}
+      >
         
-        {/* زر الإغلاق الدائري اللطيف */}
-        <button onClick={onClose} style={styles.closeButton}>✕</button>
+        {/* زر الإغلاق الدائري اللطيف المعزز بـ زوايا التموضع الثابتة */}
+        <button 
+          onClick={onClose} 
+          style={{
+            position: 'absolute',
+            top: '16px',
+            right: '20px',
+            background: '#E8D0CB',
+            border: 'none',
+            width: '32px',
+            height: '32px',
+            borderRadius: '50%',
+            fontSize: '14px',
+            color: '#4A1525',
+            cursor: 'pointer',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            fontWeight: 'bold',
+            zIndex: 10
+          }}
+        >
+          ✕
+        </button>
 
         {/* 👑 تضمين الـ AuthLayout وتمرير الخصائص المناسبة لنظام الـ Dnd */}
         <AuthLayout
@@ -171,8 +174,8 @@ const ConfirmBooking = ({ isOpen, onClose, bookingDetails }) => {
           {/* الكرت والتذكرة يمرران كـ children داخل الـ AuthLayout */}
           <div style={styles.ticketSection}>
             <CraftCard 
-              title={bookingDetails?.service || 'صالة البهية'} 
-              desc={`التاريخ: ${bookingDetails?.date || '20 May 2026 @ 19:30'}`}
+              title={bookingDetails?.service || 'صالة لازورد'} 
+              desc={`التاريخ: ${bookingDetails?.date || '27 May 2026 @ 19:30'}`}
               icon="🏰" 
               onClick={() => {}}
             />
@@ -275,15 +278,34 @@ const ConfirmBooking = ({ isOpen, onClose, bookingDetails }) => {
               </Typography>
             )}
 
-            <button type="submit" style={styles.submitButton}>
+            {/* استخدام مكوّن زر من MUI لتوحيد التصميم والظلال */}
+            <Button 
+              type="submit" 
+              fullWidth
+              variant="contained"
+              sx={{
+                backgroundColor: '#4A1525',
+                color: '#ffffff',
+                fontWeight: 'bold',
+                padding: '12px',
+                borderRadius: '25px',
+                fontSize: '16px',
+                marginTop: '15px',
+                textTransform: 'none',
+                boxShadow: '0 6px 20px rgba(74, 21, 37, 0.25)',
+                '&:hover': {
+                  backgroundColor: '#350e19',
+                }
+              }}
+            >
               {useWallet ? 'Confirm via Wallet 👛' : 'Proceed with Payment 🔒'}
-            </button>
+            </Button>
           </form>
 
         </AuthLayout>
 
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 };
 

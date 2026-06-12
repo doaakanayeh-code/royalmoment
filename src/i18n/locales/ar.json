@@ -57,7 +57,7 @@
  "auth": {
     "forgot_password_title": "هل نسيت كلمة المرور؟",
     "forgot_password_desc": "لا تقلق! أدخل بريدك الإلكتروني وسنرسل لك تعليمات استعادة الحساب.",
-    "email_placeholder": "أدخل بريدك الإلكتروني",
+    "email_placeholder": "أدخل بريدك رقم الهاتف",
     "confirm_btn": "تأكيد",
     "remember_password_text": "هل تذكرت كلمة المرور؟",
     "login_link": "سجل دخولك",

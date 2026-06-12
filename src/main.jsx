@@ -8,15 +8,22 @@ import MenuProvider from "./Context/MenuContext";
 import WindowContext from "./Context/Windowcontext";
 import { BrowserRouter as Router } from "react-router-dom";
 import './i18n/config';
-
+import { LanguageProvider } from "./Context/LanguageContext";
+import { ThemeProvider } from "./Context/ThemeContext";
 createRoot(document.getElementById('root')).render(
-  <StrictMode>
+  
  <WindowContext>
        <MenuProvider>
+        <LanguageProvider>
+          <ThemeProvider>
+
+       
          <Router>
            <App />
          </Router>
+            </ThemeProvider>
+           </LanguageProvider>
        </MenuProvider>
      </WindowContext> 
-  </StrictMode>,
+
 )

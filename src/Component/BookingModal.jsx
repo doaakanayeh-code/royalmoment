@@ -1,13 +1,13 @@
 import React, { useState } from "react";
-import { Dialog, DialogContent, Typography, Button, IconButton } from "@mui/material";
+import { Box, Button, IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import calendarImg from "../assets/Calendar.png";
 
 import Login from "../Auth/Login";
 import Register from "../Auth/SignUp";
-import ForgotPassword from "./ForgotPassword";
-import ResetPassword from "./ResetPassword";
-import AuthLayout from "../Allcomponent/AuthLayout"; // استيراد القالب المشترك
+import ForgotPassword from "../Auth/ForgotPassword";
+import ResetPassword from "../Auth/ResetPassword";
+import AuthLayout from "../Allcomponent/AuthLayout"; 
 import { useTranslation } from "react-i18next";
 
 export default function BookingModal() {
@@ -15,35 +15,44 @@ export default function BookingModal() {
   const [view, setView] = useState("booking");
   const { t } = useTranslation();
 
+  if (!open) return null;
+
   return (
-    <Dialog
-      open={open}
-      onClose={() => setOpen(false)}
-      maxWidth="sm"
-      PaperProps={{
-        sx: {
-          background: "transparent",
-          boxShadow: "none",
-          overflow: "visible",
-        },
+    <Box
+      sx={{
+        position: "fixed",
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        width: "100vw",
+        height: "100vh",
+        backgroundColor: "rgba(0, 0, 0, 0.4)", 
+        display: "flex",
+        alignItems: "center",      
+        justifyContent: "center",    
+        zIndex: 99999,              
       }}
     >
-      <DialogContent
+      <Box
         sx={{
-          background: "#F3D5D5",
+          background: "#FFF8F6", 
           borderRadius: "35px",
           width: "420px",
           p: 4,
           position: "relative",
           overflow: "hidden",
+          boxShadow: "0px 15px 40px rgba(0, 0, 0, 0.15)", 
+          mx: 2, 
         }}
       >
-        {/* CLOSE BUTTON */}
-        <IconButton onClick={() => setOpen(false)} sx={{ position: "absolute", top: 15, right: 15 }}>
+        <IconButton 
+          onClick={() => setOpen(false)} 
+          sx={{ position: "absolute", top: 15, right: 15, zIndex: 10, color: "#4A1525" }}
+        >
           <CloseIcon />
         </IconButton>
 
-        {/* BOOKING VIEW - مدمجة داخل القالب الموحد هلق */}
         {view === "booking" && (
           <AuthLayout
             image={calendarImg}
@@ -88,7 +97,6 @@ export default function BookingModal() {
           </AuthLayout>
         )}
 
-        {/* بقية الواجهات الفرعية الديناميكية */}
         {view === "login" && (
           <Login switchToRegister={() => setView("register")} switchToForgot={() => setView("forgot")} />
         )}
@@ -104,7 +112,7 @@ export default function BookingModal() {
         {view === "reset" && (
           <ResetPassword switchToLogin={() => setView("login")} />
         )}
-      </DialogContent>
-    </Dialog>
+      </Box>
+    </Box>
   );
 }
