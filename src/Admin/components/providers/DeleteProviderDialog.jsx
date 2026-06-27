@@ -1,0 +1,35 @@
+import React from "react";
+import { Button, Typography } from "@mui/material";
+
+import CustomDialog from "../common/ConfirmDialog";
+
+export default function DeleteProviderDialog({ open, onClose, onDelete }) {
+  return (
+    <CustomDialog
+      open={open}
+      onClose={onClose}
+      title="Delete Provider"
+      maxWidth="xs"
+      actions={
+        <>
+          <Button variant="outlined" onClick={onClose}>
+            Cancel
+          </Button>
+
+          <Button variant="contained" color="error" onClick={onDelete}>
+            Delete
+          </Button>
+        </>
+      }
+    >
+      <Typography
+        sx={{
+          textAlign: "center",
+          py: 2,
+        }}
+      >
+        Are you sure you want to delete this provider?
+      </Typography>
+    </CustomDialog>
+  );
+}

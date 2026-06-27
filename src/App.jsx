@@ -6,16 +6,20 @@ import "./Css/Size.css";
 
 // Components
 import HomePage from "./Component/HomePage";
-import HeroSection from "./Component/HeroSection"; 
+import HeroSection from "./Component/HeroSection";
 import Onboarding from "./Onboarding";
 import MainComponent from "./Component/MainComponent";
 import Contactas from "./Component/Contactas";
 import AddServices from "./Component/AddServices";
-import Users from "./Admin/Users";
+
+// Admin
+
+import AdminProtectedRoute from "./Admin/AdminProtectedRoute";
+import Users from "./Admin/pages/dashboard/Users";
+import Providers from "./Admin/pages/dashboard/Providers";
 import Dashboard from "./Admin/Dashboard";
 import DashboardLayout from "./Admin/DashboardLayout";
-import Providers from "./Admin/Providers";
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/dist/ReactToastify.css";
 // import Financial_Follow from "./Admin/Financial_Follow";
 // import Reports from "./Admin/Reports";
 // import Booking from "./Admin/Booking";
@@ -67,10 +71,9 @@ export default function App() {
   );
 
   return (
-    
     <ThemeProvider theme={theme}>
       <CssBaseline />
-       <Toaster position="top-right" />
+      <Toaster position="top-right" />
       <Routes>
         <Route path="/" element={<HomePage mode={mode} setMode={setMode} />}>
           <Route
@@ -94,28 +97,25 @@ export default function App() {
           <Route path="/google-callback" element={<GoogleCallback />} />
           <Route path="/ServicesDetails" element={<ServicesDetails />} />
           <Route path="/ConfirmBooking" element={<ConfirmBooking />} />
-                    <Route path="/AddServices" element={<AddServices />} />
-
-
-
-
-
+          <Route path="/AddServices" element={<AddServices />} />
         </Route>
 
         {/* Admin Routes */}
-        <Route path="/admin" element={<DashboardLayout />}>
+        <Route path="/admin/login" element={<LoginPage />} />
+
+        <Route
+          path="/admin"
+          element={
+            <AdminProtectedRoute>
+              <DashboardLayout />
+            </AdminProtectedRoute>
+          }
+        >
           <Route path="dashboard" element={<Dashboard />} />
-          <Route path="Home" element={<Home />} />
+          <Route path="home" element={<Home />} />
           <Route path="users" element={<Users />} />
           <Route path="provider" element={<Providers />} />
           <Route path="financial_content" element={<FinancialContent />} />
-
-
-          {/*<Route path="financial_Follow" element={<Financial_Follow />} />
-          <Route path="comments" element={<Comments />} />
-          <Route path="reports" element={<Reports />} />
-          <Route path="booking" element={<Booking />} /> */}
-          <Route path="login" element={<LoginPage />} />
         </Route>
       </Routes>
     </ThemeProvider>

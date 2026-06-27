@@ -1,0 +1,86 @@
+.topbar {
+  position: sticky;
+  top: 0;
+
+  height: 72px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0 24px;
+
+  background: #ffffff;
+
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+
+  z-index: 1000;
+}
+
+.topbar-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.menu-btn {
+  border: none;
+  background: transparent;
+
+  cursor: pointer;
+
+  font-size: 18px;
+
+  color: #5c4033;
+}
+
+.brand {
+  font-size: 22px;
+  font-weight: 700;
+
+  color: #5c4033;
+}
+
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.icon-btn {
+  width: 40px;
+  height: 40px;
+
+  border: none;
+
+  border-radius: 50%;
+
+  background: #f7f0ea;
+
+  cursor: pointer;
+
+  color: #5c4033;
+
+  transition: 0.3s;
+}
+
+.icon-btn:hover {
+  background: #eadad0;
+}
+
+.admin-avatar {
+  width: 40px;
+  height: 40px;
+
+  border-radius: 50%;
+
+  background: #c58b8b;
+
+  color: white;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-weight: bold;
+}

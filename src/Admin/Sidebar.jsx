@@ -1,9 +1,11 @@
-import React, { useContext, useState } from "react"; 
+import React, { useContext, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link, useLocation } from "react-router-dom";
-import Box from "@mui/material/Box";
+
 import { MenuContext } from "../Context/MenuContext";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 import {
   faHouse,
   faCalendarCheck,
@@ -13,119 +15,117 @@ import {
   faMoneyBillTrendUp,
   faComments,
   faRightFromBracket,
-  faUserGear
+  faUserGear,
 } from "@fortawesome/free-solid-svg-icons";
 
-// 1. استيراد المودال المنفصل (تأكدي من صحة المسار بالنسبة لمجلداتكِ)
-import Logout from "../Auth/Logout"; 
+import Logout from "../Auth/Logout";
+
+import "./styles/sidebar.css";
 
 export default function SideBar() {
   const { t, i18n } = useTranslation();
+
   const menu = useContext(MenuContext);
   const isOpen = menu?.isOpen;
-  const location = useLocation();
-  const isAr = i18n.language === 'ar';
 
-  // 2. حالة التحكم بفتح وإغلاق نافذة تسجيل الخروج
+  const location = useLocation();
+
+  const isAr = i18n.language === "ar";
+
   const [openLogoutModal, setOpenLogoutModal] = useState(false);
 
-  // 3. دالة تنفيذ الخروج الفعلي عند الضغط على "تأكيد"
   const handleActualLogout = () => {
     setOpenLogoutModal(false);
-    console.log("تم تسجيل الخروج بنجاح ومسح التوكن");
-    
-
+    console.log("تم تسجيل الخروج");
   };
 
   const links = [
-    { title: t("sidebar.dashboard"), path: "/admin/dashboard", icon: faChartLine },
-    { title: t("sidebar.users"), path: "/admin/users", icon: faUsers },
-    { title: t("sidebar.providers"), path: "/admin/provider", icon: faUserGear },
-    { title: t("sidebar.bookings"), path: "/admin/booking", icon: faCalendarCheck },
-    { title: t("sidebar.reports"), path: "/admin/reports", icon: faClipboardList },
-    { title: t("sidebar.financial_follow"), path: "/admin/financial_Follow", icon: faMoneyBillTrendUp },
-    { title: t("sidebar.comments"), path: "/admin/comments", icon: faComments },
-    { title: t("sidebar.home"), path: "/admin/Home", icon: faHouse },
-    { title: t("sidebar.logout"), path: "/admin/logout", icon: faRightFromBracket, isLogout: true },
+    {
+      title: t("sidebar.dashboard"),
+      path: "/admin/dashboard",
+      icon: faChartLine,
+    },
+    {
+      title: t("sidebar.users"),
+      path: "/admin/users",
+      icon: faUsers,
+    },
+    {
+      title: t("sidebar.providers"),
+      path: "/admin/provider",
+      icon: faUserGear,
+    },
+    {
+      title: t("sidebar.bookings"),
+      path: "/admin/booking",
+      icon: faCalendarCheck,
+    },
+    {
+      title: t("sidebar.reports"),
+      path: "/admin/reports",
+      icon: faClipboardList,
+    },
+    {
+      title: t("sidebar.financial_follow"),
+      path: "/admin/financial_Follow",
+      icon: faMoneyBillTrendUp,
+    },
+    {
+      title: t("sidebar.comments"),
+      path: "/admin/comments",
+      icon: faComments,
+    },
+    {
+      title: t("sidebar.home"),
+      path: "/admin/Home",
+      icon: faHouse,
+    },
+    {
+      title: t("sidebar.logout"),
+      path: "#",
+      icon: faRightFromBracket,
+      isLogout: true,
+    },
   ];
 
   return (
-    <Box
-      className="sidebar"
-      sx={{
-        width: isOpen ? "240px" : "0px",
-        transition: "0.4s ease",
-        overflow: "hidden",
-        position: "fixed",
-        top: 0,
-        left: isAr ? "auto" : 0,
-        right: isAr ? 0 : "auto",
-        height: "100vh",
-        pt: 4,
-        px: isOpen ? 2 : 0,
-        zIndex: 1300,
-        background: "#F3EBE5",
-        borderTopRightRadius: isAr ? "0" : "40px",
-        borderTopLeftRadius: isAr ? "40px" : "0",
-        borderBottomRightRadius: isAr ? "0" : "120px",
-        borderBottomLeftRadius: isAr ? "120px" : "0",
-        boxShadow: isAr ? "-10px 0 30px rgba(0,0,0,0.08)" : "10px 0 30px rgba(0,0,0,0.08)",
-      }}
-    >
-      <Box 
-        sx={{ 
-          display: "flex", 
-          flexDirection: "column", 
-          gap: 1.5, 
-          alignItems: "flex-start", 
-          mt: 2,
-          "& a": {
-            display: "flex",
-            alignItems: "center",
-            gap: "14px",
-            textDecoration: "none",
-            color: "#5C4033",
-            fontSize: "1rem",
-            fontWeight: 600,
-            transition: "0.3s",
-            width: "100%",
-            borderRadius: "16px",
-            padding: "12px 18px",
-            "&:hover": {
-              backgroundColor: "#E6D8CF",
-              transform: isAr ? "translateX(-6px)" : "translateX(6px)",
-            },
-            "&.active": { backgroundColor: "#DCC8BB" },
-            cursor: "pointer", 
-          },
-        }}
+    <>
+      <aside
+        className={`sidebar ${isOpen ? "open" : "closed"} ${
+          isAr ? "rtl" : "ltr"
+        }`}
       >
-        <Box sx={{ mb: 5, px: 1 }} />
-        
-        {links.map((link) => (
-          <Link 
-            key={link.path} 
-            to={link.isLogout ? "#" : link.path} 
-            className={location.pathname === link.path ? "active" : ""}
-            onClick={(e) => {
-              if (link.isLogout) {
-                e.preventDefault(); // منع الانتقال لصفحة جديدة
-                setOpenLogoutModal(true); // فتح المودال مباشرة
+        <div className="sidebar-links">
+          {links.map((link) => (
+            <Link
+              key={link.path}
+              to={link.isLogout ? "#" : link.path}
+              className={
+                location.pathname === link.path
+                  ? "sidebar-link active"
+                  : "sidebar-link"
               }
-            }}
-          >
-            <FontAwesomeIcon icon={link.icon} style={{ width: '20px' }} />
-            {link.title}
-          </Link>
-        ))}
-      </Box>
+              onClick={(e) => {
+                if (link.isLogout) {
+                  e.preventDefault();
+                  setOpenLogoutModal(true);
+                }
+              }}
+            >
+              <FontAwesomeIcon icon={link.icon} className="sidebar-icon" />
 
-      <Logout 
-        open={openLogoutModal} 
-        onClose={() => setOpenLogoutModal(false)} 
-        onConfirm={handleActualLogout} 
+              <span>{link.title}</span>
+            </Link>
+          ))}
+        </div>
+      </aside>
+
+      <Logout
+        open={openLogoutModal}
+        onClose={() => setOpenLogoutModal(false)}
+        onConfirm={handleActualLogout}
         isAr={isAr}
       />
-    </Box>
+    </>
   );
 }

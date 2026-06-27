@@ -9,27 +9,19 @@ export default function DashboardLayout() {
   return (
     <div
       style={{
-        display: "flex",
         minHeight: "100vh",
-        background: "#F8FAFC",
+        background: "#F8F5F2",
       }}
     >
       <SideBar />
 
       <div
         style={{
-          flex: 1,
-
-          marginLeft: "240px",
-
-    width: "calc(100% - 240px)",
-          }}
+          marginLeft: "260px",
+          minHeight: "100vh",
+        }}
       >
-        <PrimarySearchAppBar
-          mode={mode}
-          setMode={setMode}
-          isDashboard={true}
-        />
+        <PrimarySearchAppBar mode={mode} setMode={setMode} isDashboard={true} />
 
         <div
           style={{
